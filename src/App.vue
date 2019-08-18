@@ -1,29 +1,23 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-app-bar>
-
-    <v-content>
-      <About></About>
-    </v-content>
-  </v-app>
+	<div>
+		<header-page></header-page>
+		<router-view></router-view>
+		<footer-page></footer-page>
+	</div>
 </template>
 
 <script>
-import About from './views/About';
+import HeaderPage from '@/components/layout/HeaderPage'
+import FooterPage from '@/components/layout/FooterPage'
 
 export default {
-  name: 'App',
-  components: {
-    About
-  },
-  data: () => ({
-    //
-  }),
+	name: 'App',
+	components: {
+		HeaderPage,
+		FooterPage
+	},
+	data: () => ({
+		//
+	}),
 };
 </script>
