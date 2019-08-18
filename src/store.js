@@ -1,9 +1,13 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import mutationProduct from "./modules/product/mutationProduct";
-import mutationAuth from "./modules/auth/mutationAuth";
-import actionAuth from "./modules/auth/actionAuth";
-import gettersAuth from "./modules/auth/gettersAuth";
+import Vue from "vue"
+import Vuex from "vuex"
+
+import mutationsAuth from "./modules/auth/mutationsAuth"
+import actionsAuth from "./modules/auth/actionsAuth"
+import gettersAuth from "./modules/auth/gettersAuth"
+
+import mutationsProduct from "./modules/product/mutationsProduct"
+import actionsProduct from "./modules/product/actionsProduct"
+import gettersProduct from "./modules/product/gettersProduct"
 
 Vue.use(Vuex);
 
@@ -13,13 +17,15 @@ export default new Vuex.Store({
 		authToken: ''
 	},
 	mutations: {
-		...mutationProduct,
-		...mutationAuth
+		...mutationsAuth,
+		...mutationsProduct
 	},
 	actions: {
-		...actionAuth
+		...actionsAuth,
+		...actionsProduct
 	},
 	getters: {
-		...gettersAuth
+		...gettersAuth,
+		...gettersProduct
 	}
 });

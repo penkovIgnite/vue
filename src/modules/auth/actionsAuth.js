@@ -1,7 +1,7 @@
 import params from '@/config/params'
 import axios from 'axios'
 
-import {setAuthToken, logoutUser} from '@/modules/auth/mutationAuth'
+import {setAuthToken, logoutUser, fillAuthToken} from '@/modules/auth/mutationsAuth'
 
 export default {
 	login(contex, data) {
@@ -23,6 +23,9 @@ export default {
 		}).then(res => {
 			contex.commit(setAuthToken(res));
 		});
+	},
+	fillAuthToken(contex) {
+		contex.commit(fillAuthToken());
 	},
 	logout(contex, data) {
 		contex.commit(logoutUser(data));

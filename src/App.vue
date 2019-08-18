@@ -10,6 +10,8 @@
 import HeaderPage from '@/components/layout/HeaderPage'
 import FooterPage from '@/components/layout/FooterPage'
 
+import {mapActions} from 'vuex'
+
 export default {
 	name: 'App',
 	components: {
@@ -19,5 +21,11 @@ export default {
 	data: () => ({
 		//
 	}),
+	methods: {
+		...mapActions(['fillAuthToken'])
+	},
+	created() {
+		this.fillAuthToken();
+	}
 };
 </script>

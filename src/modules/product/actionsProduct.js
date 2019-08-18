@@ -1,0 +1,30 @@
+import params from '@/config/params'
+import axios from 'axios'
+
+import {getAllProducts, createProduct} from '@/modules/product/mutationsProduct'
+import gettersAuth from '@/modules/auth/gettersAuth'
+
+export default {
+	getAllProducts(contex, data) {
+		axios.get(`https://baas.kinvey.com/appdata/${params.appKey}/products`, {
+			headers: {
+				Authorization: `Kinvey ${data}`,
+				"Content-Type": "application/json"
+			}
+		})
+		.then(res => {
+			contex.commit(getAllProducts(res));
+		});
+	},
+	createProduct(contex, data) {
+		axios.post(`https://baas.kinvey.com/appdata/${params.appKey}/products`, data, {
+			headers: {
+				Authorization: `Kinvey ${contex.state.authToken}`,
+				"Content-Type": "application/json"
+				}
+		})
+		.then(res => {
+			contex.commit(createProduct(res));
+		});
+	}
+};

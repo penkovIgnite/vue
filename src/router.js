@@ -7,6 +7,9 @@ import About from "@/components/layout/About.vue";
 import Login from "@/components/auth/Login.vue";
 import Register from "@/components/auth/Register.vue";
 
+import Products from "@/components/product/Products.vue";
+import CreateProduct from "@/components/product/CreateProduct.vue";
+
 Vue.use(Router);
 
 export default new Router({
@@ -29,6 +32,14 @@ export default new Router({
 			path: "/register",
 			name: "register",
 			component: Register
+		}, {
+			path: "/products",
+			name: "products",
+			component: Products
+		}, {
+			path: "/product/create",
+			name: "createProduct",
+			component: CreateProduct
 		}
 	]
 });
