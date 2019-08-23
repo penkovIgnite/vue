@@ -7,7 +7,7 @@ import About from "@/components/layout/About.vue";
 import Login from "@/components/auth/Login.vue";
 import Register from "@/components/auth/Register.vue";
 
-import Products from "@/components/product/Products.vue";
+import Product from "@/components/layout/Product.vue";
 import CreateProduct from "@/components/product/CreateProduct.vue";
 
 Vue.use(Router);
@@ -34,8 +34,8 @@ export default new Router({
 			component: Register
 		}, {
 			path: "/products",
-			name: "products",
-			component: Products
+			name: "product",
+			component: Product
 		}, {
 			path: "/product/create",
 			name: "createProduct",

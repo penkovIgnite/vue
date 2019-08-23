@@ -5,6 +5,7 @@
 			<span class="font-weight-light">MATERIAL DESIGN</span>
 		</v-toolbar-title>
 		<v-spacer></v-spacer>
+		<v-btn class="mr-2"><router-link :to="{path: '\products'}">Products</router-link></v-btn>
 		<v-btn @click="onClickLogout">Logout</v-btn>
 	</v-app-bar>
 </template>

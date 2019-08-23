@@ -2,7 +2,6 @@ import params from '@/config/params'
 import axios from 'axios'
 
 import {getAllProducts, createProduct} from '@/modules/product/mutationsProduct'
-import gettersAuth from '@/modules/auth/gettersAuth'
 
 export default {
 	getAllProducts(contex, data) {

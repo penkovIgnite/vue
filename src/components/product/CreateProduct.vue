@@ -7,12 +7,17 @@
 						<h1>Create Product</h1>
 					</v-card-title>
 					<v-card-text>
-						<v-text-field label="Name" v-model="name"></v-text-field>
-						<v-text-field label="Description" v-model="description"></v-text-field>
-						<v-text-field label="Price" v-model="price"></v-text-field>
-						<v-text-field label="Image" v-model="img"></v-text-field>
-						<v-text-field label="In Stoke" v-model="inStoke"></v-text-field>
-						<v-text-field label="Sizes" v-model="sizes"></v-text-field>
+						<v-text-field prepend-icon="mdi-file-document-box-outline" label="Name" v-model="name"></v-text-field>
+						<v-text-field prepend-icon="mdi-subtitles-outline" label="Description" v-model="description"></v-text-field>
+						<v-row>
+							<v-col class="d-flex" cols="12" sm="6">
+								<v-text-field prepend-icon="mdi-currency-usd" label="Price" v-model="price"></v-text-field>
+							</v-col>
+							<v-col class="d-flex" cols="12" sm="6">
+								<v-select :items="items" prepend-icon="mdi-calendar-month-outline" label="Period" v-model="period"></v-select>
+							</v-col>
+						</v-row>
+						<v-text-field  prepend-icon="mdi-file-image-outline" label="Image" v-model="img"></v-text-field>
 					</v-card-text>
 					<v-divider></v-divider>
 					<v-card-actions>
@@ -35,28 +40,25 @@ export default {
 			description: '',
 			price: 0,
 			img: '',
-			inStoke: 0,
-			sizes: '',
-			attributes: []
+			period: '',
+			items: [
+				'monthly',
+				'yearly'
+			]
 		}
 	},
 	methods: {
 		...mapActions(['createProduct']),
 		onSubmitCreateProduct() {
-			var size = [];
-			this.sizes.split(', ').forEach(function(element) {
-				size.push(element);
-			});
-			this.attributes = size;
-
 			this.createProduct({
 				name: this.name,
 				description: this.description,
 				price: this.price,
 				img: this.img,
-				inStoke: this.inStoke,
-				attributes: this.attributes,
+				period: this.period
 			});
+
+			this.$router.push({path: '/products'});
 		}
 	}
 };

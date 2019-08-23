@@ -1,5 +1,4 @@
 <template>
-	<p>gosho</p>
 </template>
 
 <script>
