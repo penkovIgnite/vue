@@ -1,7 +1,7 @@
 import params from '@/config/params'
 import axios from 'axios'
 
-import {getAllProducts, createProduct, addToCard} from '@/modules/product/mutationsProduct'
+import {getAllProducts, createProduct, addToCart} from '@/modules/product/mutationsProduct'
 
 export default {
 	getAllProducts(contex, data) {
@@ -26,7 +26,7 @@ export default {
 			contex.commit(createProduct(res));
 		});
 	},
-	addToCard(contex, data) {
-		contex.commit(addToCard(data));
+	addToCart(contex, data) {
+		contex.commit(addToCart(data));
 	}
 };

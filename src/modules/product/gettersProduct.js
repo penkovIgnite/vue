@@ -1,5 +1,5 @@
 export default {
-	getAllProducts(state) {
+	getAllProducts: (state) => {
 		return state.products;
 	},
 	getProductById: (state) => (id) => {

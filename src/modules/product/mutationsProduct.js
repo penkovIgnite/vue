@@ -1,6 +1,6 @@
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
-export const ADD_TO_CARD = "ADD_TO_CARD";
+export const ADD_TO_CART = "ADD_TO_CART";
 
 export const getAllProducts = products => {
 	return {
@@ -16,21 +16,31 @@ export const createProduct = product => {
 	};
 }
 
-export const addToCard = product => {
+export const addToCart = product => {
 	return {
-		type: ADD_TO_CARD,
+		type: ADD_TO_CART,
 		product
 	};
 }
 
 export default {
 	[GET_ALL_PRODUCTS] (state, data) {
+		var products = data.products.data;
+		products.forEach(product => {
+			if(product.img == "")
+				return product.img = 'https://rimage.gnst.jp/livejapan.com/public/img/common/noimage.jpg?20190126050053';
+
+			return product;
+		});
 		state.products.push(data.products.data);
 	},
 	[CREATE_PRODUCT] (state, data) {
-		state.products.push(data.product.data);
+		var product = data.product.data;
+		if(product.img == "")
+			product.img = 'https://rimage.gnst.jp/livejapan.com/public/img/common/noimage.jpg?20190126050053';
+		state.products.push(product);
 	},
-	[ADD_TO_CARD] (state, data) {
-		state.card.push(data.product);
+	[ADD_TO_CART] (state, data) {
+		state.cartProducts.push(data.product);
 	}
 };

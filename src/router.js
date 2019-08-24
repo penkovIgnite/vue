@@ -10,6 +10,8 @@ import Register from "@/components/auth/Register.vue";
 import Product from "@/components/layout/Product.vue";
 import CreateProduct from "@/components/product/CreateProduct.vue";
 
+import Checkout from "@/components/layout/Checkout.vue";
+
 Vue.use(Router);
 
 export default new Router({
@@ -40,6 +42,10 @@ export default new Router({
 			path: "/product/create",
 			name: "createProduct",
 			component: CreateProduct
+		}, {
+			path: "/checkout",
+			name: "chekcout",
+			component: Checkout
 		}
 	]
 });

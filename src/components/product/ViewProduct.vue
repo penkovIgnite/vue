@@ -1,7 +1,7 @@
 <template>
 	<v-col cols="auto" class="mx-auto">
-		<v-card width="400" >
-			<v-img class="white--text" height="200px" :src="product.img == '' || !product.img ? notImg : product.img" >
+		<v-card width="350" >
+			<v-img contain class="dark--text" height="200px" :src="product.img" >
 				<v-card-title class="align-end fill-height">{{product.name}}</v-card-title>
 			</v-img>
 
@@ -12,7 +12,7 @@
 				<span><v-icon>mdi-calendar-month-outline</v-icon>{{product.period}}</span>
 			</div>
 			<v-card-actions class="mt-2">
-				<v-btn color="info" @click="onClickAddToCard(product._id)">
+				<v-btn color="info" @click="onClickAddToCart(product._id)">
 					<v-icon>mdi-cart</v-icon>
 					Add To Cart
 				</v-btn>
@@ -27,20 +27,13 @@ import {mapGetters, mapActions} from 'vuex'
 export default {
 	name: 'ViewProduct',
 	props: ['product'],
-	data() {
-		return {
-			notImg: 'https://rimage.gnst.jp/livejapan.com/public/img/common/noimage.jpg?20190126050053'
-		}
-	},
 	computed: {
-		...mapGetters([
-			'getProductById'
-		])
+		...mapGetters(['getProductById'])
 	},
 	methods: {
-		...mapActions(['addToCard']),
-		onClickAddToCard(id) {
-			this.addToCard(this.getProductById(id));
+		...mapActions(['addToCart']),
+		onClickAddToCart(id) {
+			this.addToCart(this.getProductById(id));
 		}
 	}
 }

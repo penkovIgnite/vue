@@ -1,5 +1,5 @@
 export default {
-	getAuthToken(state) {
+	getAuthToken: (state) => {
 		return state.authToken == '' ? localStorage.getItem('authToken') : state.authToken;
 	}
 }
