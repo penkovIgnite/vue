@@ -2,7 +2,7 @@
 	<v-content>
 		<v-app>
 			<v-row>
-				<view-product v-for="product in products[0]" :key="product.id" :product="product"></view-product>
+				<view-product v-for="product in products[0]" :key="product._id" :product="product"></view-product>
 			</v-row>
 		</v-app>
 	</v-content>

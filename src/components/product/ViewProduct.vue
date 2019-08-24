@@ -12,7 +12,7 @@
 				<span><v-icon>mdi-calendar-month-outline</v-icon>{{product.period}}</span>
 			</div>
 			<v-card-actions class="mt-2">
-				<v-btn color="info">
+				<v-btn color="info" @click="onClickAddToCard(product._id)">
 					<v-icon>mdi-cart</v-icon>
 					Add To Cart
 				</v-btn>
@@ -22,12 +22,25 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
 	name: 'ViewProduct',
 	props: ['product'],
 	data() {
 		return {
 			notImg: 'https://rimage.gnst.jp/livejapan.com/public/img/common/noimage.jpg?20190126050053'
+		}
+	},
+	computed: {
+		...mapGetters([
+			'getProductById'
+		])
+	},
+	methods: {
+		...mapActions(['addToCard']),
+		onClickAddToCard(id) {
+			this.addToCard(this.getProductById(id));
 		}
 	}
 }
