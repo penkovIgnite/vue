@@ -22,10 +22,10 @@ export default {
 		//
 	}),
 	methods: {
-		...mapActions(['fillAuthToken'])
+		...mapActions(['fillAuthUser'])
 	},
 	created() {
-		this.fillAuthToken();
+		this.fillAuthUser();
 	}
 };
 </script>

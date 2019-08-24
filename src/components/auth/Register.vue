@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
 	data() {
@@ -32,6 +32,9 @@ export default {
 			username: '',
 			password: ''
 		}
+	},
+	computed: {
+		...mapGetters(['hasGuest'])
 	},
 	methods: {
 		...mapActions(['register']),
@@ -41,6 +44,12 @@ export default {
 				password: this.password
 			})
 		}
+	},
+	beforeRouteEnter(to, from, next) {
+		next(vm => {
+			if(!vm.hasGuest)
+				vm.$router.push(from);
+		});
 	}
 }
 </script>

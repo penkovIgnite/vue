@@ -1,7 +1,7 @@
 <template>
 	<v-app>
 		<v-content>
-			<h1 class="text-center ma-5">Ckecout</h1>
+			<h1 class="text-center ma-5">Ckeckout</h1>
 			<v-row>
 				<v-col cols="12" sm="6">
 					<order></order>
@@ -40,6 +40,12 @@ export default {
 	computed: {
 		...mapGetters(['getCartProducts'])
 	},
+	beforeRouteEnter(to, from, next) {
+		next(vm => {
+			if(!vm.getCartProducts)
+				vm.$router.push(from);
+		});
+	}
 }
 </script>
 

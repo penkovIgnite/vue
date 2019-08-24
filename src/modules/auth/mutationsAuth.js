@@ -1,17 +1,17 @@
-export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
+export const SET_AUTH_USER = 'SET_AUTH_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
-export const FILL_AUTH_TOKEN = 'FILL_AUTH_TOKEN';
+export const FILL_AUTH_USER = 'FILL_AUTH_USER';
 
-export const setAuthToken = data => {
+export const setAuthUser = data => {
 	return {
-		type: SET_AUTH_TOKEN,
+		type: SET_AUTH_USER,
 		payload: data
 	};
 }
 
-export const fillAuthToken = data => {
+export const fillAuthUser = data => {
 	return {
-		type: FILL_AUTH_TOKEN,
+		type: FILL_AUTH_USER,
 		payload: data
 	};
 }
@@ -24,28 +24,23 @@ export const logoutUser = data => {
 }
 
 export default {
-	[SET_AUTH_TOKEN] (state, data) {
-		let authToken = data.payload.data._kmd.authtoken;
-		let userId = data.payload.data._id;
-		localStorage.setItem('authToken', authToken);
-		localStorage.setItem('userId', userId);
-		state.authToken = localStorage.getItem('authToken');
-		state.userId = localStorage.getItem('userId');
+	[SET_AUTH_USER] (state, data) {
+		let payload = data.payload.data;
+		let user = {
+			id: payload._id,
+			token: payload._kmd.authtoken,
+			role: payload.role
+		};
+		localStorage.setItem('user', JSON.stringify(user));
+		state.user = user;
 	},
-	[FILL_AUTH_TOKEN] (state) {
-		var authToken = localStorage.getItem('authToken');
-		if(state.authToken == '' && authToken != null)
-			state.authToken = authToken;
-
-		var userId = localStorage.getItem('userId');		
-		if(state.userId == '' && userId != null)
-			state.userId = userId;
+	[FILL_AUTH_USER] (state) {
+		let user = JSON.parse(localStorage.getItem('user'));
+		if(state.user == '' && user != null)
+			state.user = user;
 	},
 	[LOGOUT_USER] (state) {
-		localStorage.removeItem('authToken');
-		state.authToken = '';
-
-		localStorage.removeItem('userId');
-		state.userId = '';
+		localStorage.removeItem('user');
+		state.user = '';
 	}
 }

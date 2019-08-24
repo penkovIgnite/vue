@@ -18,7 +18,7 @@ export default {
 	createProduct(contex, data) {
 		axios.post(`https://baas.kinvey.com/appdata/${params.appKey}/products`, data, {
 			headers: {
-				Authorization: `Kinvey ${contex.state.authToken}`,
+				Authorization: `Kinvey ${contex.state.user.token}`,
 				"Content-Type": "application/json"
 				}
 		})

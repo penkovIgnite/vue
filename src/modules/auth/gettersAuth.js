@@ -1,5 +1,8 @@
 export default {
 	getAuthToken: (state) => {
-		return state.authToken == '' ? localStorage.getItem('authToken') : state.authToken;
+		return state.user.token == '' ? JSON.parse(localStorage.getItem('user')) : state.user.token;
+	},
+	hasGuest: (state) => {
+		return state.user.role == 'guest';
 	}
 }

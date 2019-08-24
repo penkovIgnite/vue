@@ -5,12 +5,18 @@
 			<span class="font-weight-light">MATERIAL DESIGN</span>
 		</v-toolbar-title>
 		<v-spacer></v-spacer>
-		<v-btn class="mr-2"><router-link :to="{path: '\products'}">Products</router-link></v-btn>
-		<v-btn @click="onClickLogout">Logout</v-btn>
+		<router-link
+			v-for="link in links" :key="link.name"
+			tag="button"
+			class="v-btn v-btn--flat v-btn--text theme--light v-size--default"
+			:to="{path: link.path}"
+		>
+			{{link.name}}
+		</router-link>
 		<v-menu full-width fixed>
 			<template v-slot:activator="{on}">
 			<v-btn icon v-on="on">
-				<v-icon>mdi-dots-vertical</v-icon>
+				<v-icon>mdi-cart</v-icon>
 			</v-btn>
 			</template>
 
@@ -20,7 +26,28 @@
 				<v-list-item v-else v-for="product in getCartProducts" :key="product._id">
 					<cart :product="product"></cart>
 				</v-list-item>
-				<v-btn class="success" @click="onClickCheckout">Checkout</v-btn>
+				<v-btn v-if="getCartProducts.length" class="success" @click="onClickCheckout">Checkout</v-btn>
+			</v-list>
+		</v-menu>
+		<v-menu>
+			<template v-slot:activator="{on}">
+			<v-btn icon v-on="on">
+				<v-icon>mdi-account-circle-outline</v-icon>
+			</v-btn>
+			</template>
+
+			<v-list flat width="200px" class="text-center pa-2">
+				<h4>Account</h4>
+				<v-list-item v-for="link in authLinks" :key="link.name">
+					<v-list-item-title>
+						<router-link tag="span" :to="{path: link.path}">{{link.name}}</router-link>
+					</v-list-item-title>
+				</v-list-item>
+				<v-list-item v-if="!hasGuest">
+					<v-list-item-title>
+						<v-btn color="danger" @click="onClickLogout">Logout</v-btn>
+					</v-list-item-title>
+				</v-list-item>
 			</v-list>
 		</v-menu>
 	</v-app-bar>
@@ -34,14 +61,21 @@ import {mapGetters, mapActions} from 'vuex'
 export default {
 	data() {
 		return {
-			activate: true
+			links: [
+				{path: '/home', name: 'Home'},
+				{path: '/products', name: 'Products'}
+			],
+			authLinks: [
+				{path: '/login', name: 'Login'},
+				{path: '/register', name: 'Register'}
+			]
 		}
 	},
 	components: {
 		Cart
 	},
 	computed: {
-		...mapGetters(['getCartProducts'])
+		...mapGetters(['getCartProducts', 'hasGuest'])
 	},
 	methods: {
 		...mapActions(['logout']),

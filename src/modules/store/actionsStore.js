@@ -5,11 +5,11 @@ import {order} from '@/modules/store/mutationsStore'
 
 export default {
 	order(contex, data) {
-		data.userId = contex.state.userId;
+		data.userId = contex.state.user.id;
 		data.productIds = contex.state.cartProducts.map(product => product._id)
 		axios.post(`https://baas.kinvey.com/appdata/${params.appKey}/orders`, data, {
 			headers: {
-				Authorization: `Kinvey ${contex.state.authToken}`,
+				Authorization: `Kinvey ${contex.state.user.token}`,
 				"Content-Type": "application/json"
 			}
 		})

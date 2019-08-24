@@ -19,8 +19,7 @@ export default new Vuex.Store({
 	state: {
 		products: [],
 		cartProducts: [],
-		authToken: '',
-		userId: ''
+		user: '',
 	},
 	mutations: {
 		...mutationsAuth,
