@@ -4,5 +4,8 @@ export default {
 	},
 	hasGuest: (state) => {
 		return state.user.role == 'guest';
-	}
+	},
+	getAuthError: (state) => {
+		return state.authError;
+	},
 }

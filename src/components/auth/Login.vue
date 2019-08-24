@@ -1,6 +1,9 @@
 <template>
 	<v-app>
 		<v-content>
+			<v-alert width="800" v-if="error.length" dismissible type="error" class="mx-auto mt-3">
+				{{error}}
+			</v-alert>
 			<v-form @submit.prevent="onSubmitLogin">
 				<v-card width="400" class="mx-auto mt-5">
 					<v-card-title>
@@ -14,7 +17,7 @@
 					<v-card-actions>
 						<v-btn color="success" :to="{path: 'register'}">Register</v-btn>
 						<v-spacer></v-spacer>
-						<v-btn color="info" type="submit">Login</v-btn>
+						<v-btn color="info" type="submit" :loading="loading" :disabled="disabled">Login</v-btn>
 					</v-card-actions>
 				</v-card>
 			</v-form>
@@ -26,30 +29,43 @@
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
+	props: ['error'],
 	data() {
 		return {
+			location: '',
 			username: '',
-			password: ''
+			password: '',
+			loading: false,
+			disabled: false
 		}
 	},
 	computed: {
 		...mapGetters(['hasGuest'])
 	},
 	methods: {
-		...mapActions(['login']),
+		...mapActions(['login', 'removeError']),
 		onSubmitLogin() {
+			this.loading = true;
+			this.disabled = true;
+
 			this.login({
 				username: this.username,
 				password: this.password
-			}).then((res) => {
-				console.log(res);
 			})
 		}
 	},
+	created() {
+		this.location = this.$route.query.location
+	},
 	beforeRouteEnter(to, from, next) {
 		next(vm => {
-			if(!vm.hasGuest)
-				vm.$router.push(from);
+			if(vm.hasGuest && vm.location == 'cart') {
+				vm.$router.push({path: '/checkout'}).catch(err => {});
+			} else if(!vm.hasGuest) {
+				vm.$router.push(from).catch(err => {});
+			}
+
+			vm.removeError();
 		});
 	}
 };

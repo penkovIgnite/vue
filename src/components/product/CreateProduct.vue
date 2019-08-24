@@ -58,7 +58,7 @@ export default {
 				period: this.period
 			});
 
-			this.$router.push({path: '/products'});
+			this.$router.push({path: '/'});
 		}
 	}
 };

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<header-page></header-page>
-		<router-view></router-view>
+		<router-view :error="error"></router-view>
 		<footer-page></footer-page>
 	</div>
 </template>
@@ -10,7 +10,10 @@
 import HeaderPage from '@/components/layout/HeaderPage'
 import FooterPage from '@/components/layout/FooterPage'
 
-import {mapActions} from 'vuex'
+import {AUTH_ERROR, SET_AUTH_USER} from '@/modules/auth/mutationsAuth'
+import {ORDER} from '@/modules/store/mutationsStore'
+
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
 	name: 'App',
@@ -21,11 +24,24 @@ export default {
 	data: () => ({
 		//
 	}),
+	computed: {
+		...mapGetters({error: 'getAuthError'})
+	},
 	methods: {
-		...mapActions(['fillAuthUser'])
+		...mapActions(['fillAuthUser', 'removeError'])
 	},
 	created() {
 		this.fillAuthUser();
+	},
+	updated() {
+		this.$store.subscribe((mutation, state) => {
+			if(mutation.type == AUTH_ERROR)
+				this.getAuthError;
+			if(mutation.type == SET_AUTH_USER && state.user.role != 'guest')
+				this.$router.push({path: "/"}).catch(err => {});
+			if(mutation.type == ORDER)
+				this.$router.push({path: "/thank-you"}).catch(err => {});
+		});
 	}
 };
 </script>

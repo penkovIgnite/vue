@@ -20,6 +20,7 @@ export default new Vuex.Store({
 		products: [],
 		cartProducts: [],
 		user: '',
+		authError: ''
 	},
 	mutations: {
 		...mutationsAuth,

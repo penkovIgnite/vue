@@ -13,11 +13,24 @@
 		>
 			{{link.name}}
 		</router-link>
+
+		<router-link
+			v-if="hasGuest"
+			v-for="link in authLinks" :key="link.name"
+			tag="button"
+			class="v-btn v-btn--flat v-btn--text theme--light v-size--default"
+			:to="{path: link.path}"
+		>
+			{{link.name}}
+		</router-link>
+
+		<v-btn text class="text-error" v-if="!hasGuest" @click="onClickLogout">Logout</v-btn>
+
 		<v-menu full-width fixed>
 			<template v-slot:activator="{on}">
-			<v-btn icon v-on="on">
-				<v-icon>mdi-cart</v-icon>
-			</v-btn>
+				<v-btn icon v-on="on">
+					<v-icon>mdi-cart</v-icon>
+				</v-btn>
 			</template>
 
 			<v-list flat width="500px" class="text-center pa-2">
@@ -29,41 +42,21 @@
 				<v-btn v-if="getCartProducts.length" class="success" @click="onClickCheckout">Checkout</v-btn>
 			</v-list>
 		</v-menu>
-		<v-menu>
-			<template v-slot:activator="{on}">
-			<v-btn icon v-on="on">
-				<v-icon>mdi-account-circle-outline</v-icon>
-			</v-btn>
-			</template>
-
-			<v-list flat width="200px" class="text-center pa-2">
-				<h4>Account</h4>
-				<v-list-item v-for="link in authLinks" :key="link.name">
-					<v-list-item-title>
-						<router-link tag="span" :to="{path: link.path}">{{link.name}}</router-link>
-					</v-list-item-title>
-				</v-list-item>
-				<v-list-item v-if="!hasGuest">
-					<v-list-item-title>
-						<v-btn color="danger" @click="onClickLogout">Logout</v-btn>
-					</v-list-item-title>
-				</v-list-item>
-			</v-list>
-		</v-menu>
 	</v-app-bar>
 </template>
 
 <script>
 import Cart from '@/components/store/Cart'
 
+import params from '@/config/params'
+import {LOGOUT_USER} from '@/modules/auth/mutationsAuth'
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
 	data() {
 		return {
 			links: [
-				{path: '/home', name: 'Home'},
-				{path: '/products', name: 'Products'}
+				{path: '/', name: 'Products'}
 			],
 			authLinks: [
 				{path: '/login', name: 'Login'},
@@ -78,12 +71,20 @@ export default {
 		...mapGetters(['getCartProducts', 'hasGuest'])
 	},
 	methods: {
-		...mapActions(['logout']),
+		...mapActions(['login', 'logout']),
 		onClickLogout() {
 			this.logout();
+			this.$store.subscribe((mutation, state) => {
+				if(mutation.type == LOGOUT_USER)
+					this.login(params.collectionAuth);
+			})
 		},
 		onClickCheckout() {
-			this.$router.push({path: '/checkout'});
+			if(!this.hasGuest) {
+				this.$router.push({path: '/login', query: {location: 'cart'}});
+			} else {
+				this.$router.push({path: '/checkout'});
+			}
 		}
 	}
 };

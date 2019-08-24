@@ -1,6 +1,9 @@
 <template>
 	<v-app>
 		<v-content>
+			<v-alert width="800" v-if="error.length" dismissible type="error" class="mx-auto mt-3">
+				{{error}}
+			</v-alert>
 			<v-form @submit.prevent="onSubmitRegister">
 				<v-card width="400" class="mx-auto mt-5">
 					<v-card-title>
@@ -14,7 +17,7 @@
 					<v-card-actions>
 						<v-btn color="success" :to="{path: 'login'}">Login</v-btn>
 						<v-spacer></v-spacer>
-						<v-btn color="info" type="submit">Register</v-btn>
+						<v-btn color="info" type="submit" :loading="loading" :disabled="disabled">Register</v-btn>
 					</v-card-actions>
 				</v-card>
 			</v-form>
@@ -27,18 +30,24 @@
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
+	props: ['error'],
 	data() {
 		return {
 			username: '',
-			password: ''
+			password: '',
+			loading: false,
+			disabled: false
 		}
 	},
 	computed: {
 		...mapGetters(['hasGuest'])
 	},
 	methods: {
-		...mapActions(['register']),
+		...mapActions(['register', 'removeError']),
 		onSubmitRegister() {
+			this.loading = true;
+			this.disabled = true;
+
 			this.register({
 				username: this.username,
 				password: this.password
@@ -49,6 +58,8 @@ export default {
 		next(vm => {
 			if(!vm.hasGuest)
 				vm.$router.push(from);
+
+			vm.removeError();
 		});
 	}
 }

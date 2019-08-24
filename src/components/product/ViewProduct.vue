@@ -2,7 +2,7 @@
 	<v-col cols="auto" class="mx-auto">
 		<v-card width="350" >
 			<v-img contain class="dark--text" height="200px" :src="product.img">
-				<v-overlay opacity=".3"></v-overlay>
+				<!--<v-overlay opacity=".3"></v-overlay>-->
 				<v-card-title class="align-end fill-height">{{product.name}}</v-card-title>
 			</v-img>
 			<v-card-text>{{product.description}}</v-card-text>

@@ -21,7 +21,7 @@
 			</v-card-text>
 			<v-divider></v-divider>
 			<v-card-actions>
-				<v-btn color="info" type="submit">Submit</v-btn>
+				<v-btn color="info" type="submit" :loading="loading" :disabled="disabled">Submit</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-form>
@@ -39,7 +39,9 @@ export default {
 			address: '',
 			city: '',
 			zip: '',
-			country: ''
+			country: '',
+			loading: false,
+			disabled: false
 		}
 	},
 	computed: {
@@ -48,6 +50,9 @@ export default {
 	methods: {
 		...mapActions(['order']),
 		onSubmitOrder() {
+			this.loading = true;
+			this.disabled = true;
+
 			let data = {
 				firstName: this.firstName,
 				lastName: this.lastName,

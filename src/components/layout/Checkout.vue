@@ -38,12 +38,12 @@ export default {
 		Cart
 	},
 	computed: {
-		...mapGetters(['getCartProducts'])
+		...mapGetters(['getCartProducts', 'hasGuest'])
 	},
 	beforeRouteEnter(to, from, next) {
 		next(vm => {
-			if(!vm.getCartProducts)
-				vm.$router.push(from);
+			if(!vm.getCartProducts.length && vm.hasGuest)
+				vm.$router.push(from).catch(err => {});
 		});
 	}
 }

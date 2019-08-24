@@ -1,6 +1,8 @@
 export const SET_AUTH_USER = 'SET_AUTH_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const FILL_AUTH_USER = 'FILL_AUTH_USER';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const REMOVE_ERROR = 'REMOVE_ERROR';
 
 export const setAuthUser = data => {
 	return {
@@ -19,6 +21,20 @@ export const fillAuthUser = data => {
 export const logoutUser = data => {
 	return {
 		type: LOGOUT_USER,
+		payload: data
+	};
+}
+
+export const authError = data => {
+	return {
+		type: AUTH_ERROR,
+		payload: data
+	};
+}
+
+export const removeError = data => {
+	return {
+		type: REMOVE_ERROR,
 		payload: data
 	};
 }
@@ -42,5 +58,12 @@ export default {
 	[LOGOUT_USER] (state) {
 		localStorage.removeItem('user');
 		state.user = '';
+	},
+	[AUTH_ERROR] (state, data) {
+		let response = data.payload.data;
+		state.authError = response.description
+	},
+	[REMOVE_ERROR] (state) {
+		state.authError = '';
 	}
 }
