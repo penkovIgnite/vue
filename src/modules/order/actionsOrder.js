@@ -1,7 +1,7 @@
 import params from '@/config/params'
 import axios from 'axios'
 
-import {setOrders, setOrder} from '@/modules/order/mutationsOrder'
+import {setOrders, setOrder, updateOrder} from '@/modules/order/mutationsOrder'
 
 export default {
 	getAllOrders(contex, token) {
@@ -15,15 +15,28 @@ export default {
 			contex.commit(setOrders(res));
 		});
 	},
-	getOrderById(contex, token, id) {
-		axios.get(`https://baas.kinvey.com/appdata/${params.appKey}/orders/${id}`, {
+	getOrderById(contex, data) {
+		axios.get(`https://baas.kinvey.com/appdata/${params.appKey}/orders/${data.id}`, {
 			headers: {
-				Authorization: `Kinvey ${token}`,
+				Authorization: `Kinvey ${data.token}`,
 				"Content-Type": "application/json"
 			}
 		})
 		.then(res => {
 			contex.commit(setOrder(res));
+		});
+	},
+	changeOrderStatus(contex, data) {
+		let order = data.order;
+		order.status = 'Shipped';
+		axios.post(`https://baas.kinvey.com/appdata/${params.appKey}/orders/${data.id}`, order, {
+			headers: {
+				Authorization: `Kinvey ${data.token}`,
+				"Content-Type": "application/json"
+			}
+		})
+		.then(res => {
+			contex.commit(updateOrder(res));
 		});
 	}
 };

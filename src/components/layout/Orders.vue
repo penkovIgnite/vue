@@ -27,6 +27,12 @@ export default {
 	},
 	created() {
 		this.getAllOrders(this.getAuthToken)
+	},
+	beforeRouteEnter(to, from, next) {
+		next(vm => {
+			if(vm.hasGuest)
+				vm.$router.push({path: '/'}).catch(err => {});
+		});
 	}
 }
 </script>

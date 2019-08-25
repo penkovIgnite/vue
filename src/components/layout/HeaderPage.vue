@@ -1,8 +1,7 @@
 <template>
 	<v-app-bar app>
 		<v-toolbar-title class="headline text-uppercase">
-			<span>Vuetify</span>
-			<span class="font-weight-light">MATERIAL DESIGN</span>
+			<span>Vue service store</span>
 		</v-toolbar-title>
 		<v-spacer></v-spacer>
 		<router-link
@@ -89,8 +88,10 @@ export default {
 		onClickLogout() {
 			this.logout();
 			this.$store.subscribe((mutation, state) => {
-				if(mutation.type == LOGOUT_USER)
+				if(mutation.type == LOGOUT_USER) {
 					this.login(params.collectionAuth);
+					this.$router.push({path: '/'});
+				}
 			})
 		},
 		onClickCheckout() {
