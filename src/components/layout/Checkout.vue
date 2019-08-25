@@ -4,7 +4,7 @@
 			<h1 class="text-center ma-5">Ckeckout</h1>
 			<v-row>
 				<v-col cols="12" sm="6">
-					<order></order>
+					<order-form></order-form>
 				</v-col>
 				<v-col cols="12" sm="6">
 					<v-list flat width="500px" class="text-center ma-10 pa-3">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Order from '@/components/store/Order'
+import OrderForm from '@/components/store/OrderForm'
 import Cart from '@/components/store/Cart'
 
 import {mapGetters} from 'vuex'
@@ -34,7 +34,7 @@ import {mapGetters} from 'vuex'
 export default {
 	name: 'Ckeckout',
 	components: {
-		Order,
+		OrderForm,
 		Cart
 	},
 	computed: {
@@ -42,7 +42,7 @@ export default {
 	},
 	beforeRouteEnter(to, from, next) {
 		next(vm => {
-			if(!vm.getCartProducts.length && vm.hasGuest)
+			if(!vm.getCartProducts.length || vm.hasGuest)
 				vm.$router.push(from).catch(err => {});
 		});
 	}

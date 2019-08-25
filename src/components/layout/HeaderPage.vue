@@ -6,6 +6,16 @@
 		</v-toolbar-title>
 		<v-spacer></v-spacer>
 		<router-link
+			v-if="hasAdmin"
+			v-for="link in adminLink" :key="link.name"
+			tag="button"
+			class="v-btn v-btn--flat v-btn--text theme--light v-size--default"
+			:to="{path: link.path}"
+		>
+			{{link.name}}
+		</router-link>
+
+		<router-link
 			v-for="link in links" :key="link.name"
 			tag="button"
 			class="v-btn v-btn--flat v-btn--text theme--light v-size--default"
@@ -61,6 +71,10 @@ export default {
 			authLinks: [
 				{path: '/login', name: 'Login'},
 				{path: '/register', name: 'Register'}
+			],
+			adminLink: [
+				{path: '/product/create', name: 'Create Product'},
+				{path: '/orders', name: 'View Orders'},
 			]
 		}
 	},
@@ -68,7 +82,7 @@ export default {
 		Cart
 	},
 	computed: {
-		...mapGetters(['getCartProducts', 'hasGuest'])
+		...mapGetters(['getCartProducts', 'hasGuest', 'hasAdmin'])
 	},
 	methods: {
 		...mapActions(['login', 'logout']),
@@ -80,7 +94,7 @@ export default {
 			})
 		},
 		onClickCheckout() {
-			if(!this.hasGuest) {
+			if(this.hasGuest) {
 				this.$router.push({path: '/login', query: {location: 'cart'}});
 			} else {
 				this.$router.push({path: '/checkout'});

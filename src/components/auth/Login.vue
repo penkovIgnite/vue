@@ -10,14 +10,14 @@
 						<h1>Login</h1>
 					</v-card-title>
 					<v-card-text>
-						<v-text-field label="Username" v-model="username"></v-text-field>
-						<v-text-field type="Password" label="Password" v-model="password"></v-text-field>
+						<v-text-field :rules="($v.username.$error ? ['Your username is not valid!'] : [])" label="Username" v-model="$v.username.$model"></v-text-field>
+						<v-text-field :rules="($v.password.$error ? ['Your password is not valid!'] : [])" type="Password" label="Password" v-model="$v.password.$model"></v-text-field>
 					</v-card-text>
 					<v-divider></v-divider>
 					<v-card-actions>
 						<v-btn color="success" :to="{path: 'register'}">Register</v-btn>
 						<v-spacer></v-spacer>
-						<v-btn color="info" type="submit" :loading="loading" :disabled="disabled">Login</v-btn>
+						<v-btn color="info" type="submit" :disabled="$v.$error">Login</v-btn>
 					</v-card-actions>
 				</v-card>
 			</v-form>
@@ -27,6 +27,7 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import {required, minLength} from 'vuelidate/lib/validators'
 
 export default {
 	props: ['error'],
@@ -34,9 +35,17 @@ export default {
 		return {
 			location: '',
 			username: '',
-			password: '',
-			loading: false,
-			disabled: false
+			password: ''
+		}
+	},
+	validations: {
+		username: {
+			required,
+			minLength: minLength(4)
+		},
+		password: {
+			required,
+			minLength: minLength(6)
 		}
 	},
 	computed: {
@@ -45,9 +54,6 @@ export default {
 	methods: {
 		...mapActions(['login', 'removeError']),
 		onSubmitLogin() {
-			this.loading = true;
-			this.disabled = true;
-
 			this.login({
 				username: this.username,
 				password: this.password

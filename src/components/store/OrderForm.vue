@@ -7,10 +7,18 @@
 			<v-card-text>
 				<v-row>
 					<v-col class="d-flex" cols="12" sm="6">
-						<v-text-field label="First Name" v-model="firstName"></v-text-field>
+						<v-text-field
+							:rules="($v.firstName.$error ? ['Your First Name is not valid!'] : [])"
+							label="First Name"
+							v-model="$v.firstName.$model"
+						></v-text-field>
 					</v-col>
 					<v-col class="d-flex" cols="12" sm="6">
-						<v-text-field label="Last Name" v-model="lastName"></v-text-field>
+						<v-text-field
+							:rules="($v.lastName.$error ? ['Your Last Name is not valid!'] : [])"
+							label="Last Name"
+							v-model="$v.lastName.$model"
+						></v-text-field>
 					</v-col>
 				</v-row>
 				<h3>Billing Address</h3>
@@ -21,7 +29,7 @@
 			</v-card-text>
 			<v-divider></v-divider>
 			<v-card-actions>
-				<v-btn color="info" type="submit" :loading="loading" :disabled="disabled">Submit</v-btn>
+				<v-btn color="info" type="submit" :disabled="$v.$error">Submit</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-form>
@@ -29,9 +37,10 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import {required, minLength} from 'vuelidate/lib/validators'
 
 export default {
-	name: 'Order',
+	name: 'OrderForm',
 	data() {
 		return {
 			firstName: '',
@@ -39,9 +48,17 @@ export default {
 			address: '',
 			city: '',
 			zip: '',
-			country: '',
-			loading: false,
-			disabled: false
+			country: ''
+		}
+	},
+	validations: {
+		firstName: {
+			required,
+			minLength: minLength(2)
+		},
+		lastName: {
+			required,
+			minLength: minLength(2)
 		}
 	},
 	computed: {
@@ -50,9 +67,6 @@ export default {
 	methods: {
 		...mapActions(['order']),
 		onSubmitOrder() {
-			this.loading = true;
-			this.disabled = true;
-
 			let data = {
 				firstName: this.firstName,
 				lastName: this.lastName,

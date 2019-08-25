@@ -20,7 +20,7 @@ export default {
 			headers: {
 				Authorization: `Kinvey ${contex.state.user.token}`,
 				"Content-Type": "application/json"
-				}
+			}
 		})
 		.then(res => {
 			contex.commit(createProduct(res));

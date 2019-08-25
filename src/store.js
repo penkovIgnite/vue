@@ -13,28 +13,37 @@ import mutationsStore from "./modules/store/mutationsStore"
 import actionsStore from "./modules/store/actionsStore"
 import gettersStore from "./modules/store/gettersStore"
 
+import mutationsOrder from "./modules/order/mutationsOrder"
+import actionsOrder from "./modules/order/actionsOrder"
+import gettersOrder from "./modules/order/gettersOrder"
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
 		products: [],
 		cartProducts: [],
+		orders: [],
+		order: '',
 		user: '',
 		authError: ''
 	},
 	mutations: {
 		...mutationsAuth,
 		...mutationsProduct,
-		...mutationsStore
+		...mutationsStore,
+		...mutationsOrder
 	},
 	actions: {
 		...actionsAuth,
 		...actionsProduct,
-		...actionsStore
+		...actionsStore,
+		...actionsOrder
 	},
 	getters: {
 		...gettersAuth,
 		...gettersProduct,
-		...gettersStore
+		...gettersStore,
+		...gettersOrder
 	}
 });

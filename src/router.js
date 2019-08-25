@@ -9,6 +9,9 @@ import CreateProduct from "@/components/product/CreateProduct.vue";
 
 import Checkout from "@/components/layout/Checkout.vue";
 
+import Orders from "@/components/layout/Orders.vue";
+import OrderDetails from "@/components/order/OrderDetails.vue";
+
 import Thanks from "@/components/layout/Thanks.vue";
 
 Vue.use(Router);
@@ -37,6 +40,14 @@ export default new Router({
 			path: "/checkout",
 			name: "chekcout",
 			component: Checkout
+		}, {
+			path: "/orders",
+			name: "orders",
+			component: Orders
+		}, {
+			path: "/order-details/:id",
+			name: "order-details",
+			component: OrderDetails
 		}, {
 			path: "/thank-you",
 			name: "thanks",
