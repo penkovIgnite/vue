@@ -26,34 +26,15 @@
 			>
 				View Details
 			</router-link>
-			<v-btn color="success" v-if="!order.status" @click="onClickChangeStatus(order._id)">Status Shipping</v-btn>
 		</v-card-actions>
 	</v-card>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
-
 export default {
 	name: 'Order',
 	props: {
 		order: Object
 	},
-	computed: {
-		...mapGetters({
-			token: 'getAuthToken',
-		})
-	},
-	methods: {
-		...mapActions(['changeOrderStatus']),
-		onClickChangeStatus(id) {
-			let data = {
-				token: this.token,
-				id: id,
-				order: this.order
-			};
-			this.changeOrderStatus(data);
-		}
-	}
 }
 </script>
