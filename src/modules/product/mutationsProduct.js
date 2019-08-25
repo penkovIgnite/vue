@@ -32,12 +32,13 @@ export default {
 
 			return product;
 		});
-		state.products.push(data.products.data);
+		state.products = data.products.data;
 	},
 	[CREATE_PRODUCT] (state, data) {
 		var product = data.product.data;
 		if(product.img == "")
 			product.img = 'https://rimage.gnst.jp/livejapan.com/public/img/common/noimage.jpg?20190126050053';
+
 		state.products.push(product);
 	},
 	[ADD_TO_CART] (state, data) {

@@ -6,7 +6,7 @@
 				<v-overlay absolute opacity=".5" v-if="!products.length">
 					<v-progress-circular indeterminate size="64"></v-progress-circular>
 				</v-overlay>
-				<view-product v-else v-for="product in products[0]" :key="product._id" :product="product"></view-product>
+				<view-product v-else v-for="product in products" :key="product._id" :product="product"></view-product>
 			</v-row>
 		</v-app>
 	</v-content>

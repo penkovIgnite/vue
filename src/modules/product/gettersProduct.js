@@ -3,6 +3,6 @@ export default {
 		return state.products;
 	},
 	getProductById: (state) => (id) => {
-		return state.products[0].find(product => product._id == id);
+		return state.products.find(product => product._id == id);
 	}
 }
