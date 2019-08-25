@@ -13,6 +13,7 @@ import Orders from "@/components/layout/Orders.vue";
 import OrderDetails from "@/components/order/OrderDetails.vue";
 
 import Thanks from "@/components/layout/Thanks.vue";
+import PageNotFound from "@/components/layout/PageNotFound.vue";
 
 Vue.use(Router);
 
@@ -52,6 +53,10 @@ export default new Router({
 			path: "/thank-you",
 			name: "thanks",
 			component: Thanks
+		}, {
+			path: "*",
+			name: "404",
+			component: PageNotFound
 		}
 	]
 });
